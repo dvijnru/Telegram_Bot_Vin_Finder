@@ -14,4 +14,6 @@ if __name__ == '__main__':
     print_hi('PyCharm')
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
+#thats amazing thing but Im more geniously than thinking before THAT
 #whatsapp is good but telegram better
