@@ -2,8 +2,10 @@ from selenium import webdriver
 import time
 import random
 
+
 def delay():
     time.sleep(random.randint(1,3))
+
 
 def selen_vin_check(VIN):
     driver = webdriver.Chrome()
@@ -27,6 +29,22 @@ def selen_vin_check(VIN):
     driver.quit()
     return answer
 
+def selen_nomer_check(gosnomer):
+    driver = webdriver.Chrome()
+    driver.get('https://vin01.ru/')
+
+    input_window = driver.find_element_by_id('num')
+    input_window.send_keys(gosnomer)
+
+    find_button = driver.find_element_by_id('searchByGosNumberButton')
+    find_button.click()
+
+    time.sleep(1)
+
+    result = driver.find_element_by_id('vinNumbers')
+    answer = result.text
+
+    return answer
 
 
 
