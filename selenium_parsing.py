@@ -39,10 +39,16 @@ def selen_nomer_check(gosnomer):
     find_button = driver.find_element_by_id('searchByGosNumberButton')
     find_button.click()
 
+    #задержка 1сек нужна для загрузки страницы и получения ответа от сервера. Если убрать - то элемент не успевает прогрузиться в браузере и захват не происходит.
     time.sleep(1)
 
-    result = driver.find_element_by_id('vinNumbers')
-    answer = result.text
+    try:
+        result = driver.find_element_by_id('vinNumbers')
+        answer = 'Зарегистрированные VIN для госномера '+str(gosnomer).upper()+' :\n'+str(result.text)
+    except:
+        answer = 'Не удалось найти VIN в базе РСА для данного номера. Возможно, автомобиль не проходил техосмотр, так как ему менее 3-х лет, либо полис ОСАГО никогда не оформлялся.'
+
+    driver.quit()
 
     return answer
 

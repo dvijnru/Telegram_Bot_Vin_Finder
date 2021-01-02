@@ -4,7 +4,6 @@ from telebot import types
 from selenium_parsing import selen_vin_check
 from selenium_parsing import selen_nomer_check
 import re
-import time
 
 bot = telebot.TeleBot(config.TOKEN)
 
@@ -53,7 +52,11 @@ def enter_vin(message):
         return
 
     if message.text == 'Поиск по Госномеру':
-        pass
+        return
+
+    if message.text == 'Поиск по VIN':
+        return
+
     else:
         bot.send_message(message.chat.id, 'Указан некорректный идентификатор транспортного средства (VIN), попробуйте еще!')
         bot.register_next_step_handler(message, enter_vin)
@@ -67,13 +70,16 @@ def enter_nomer(message):
     # запуск цепочки событий выбора, если пользователь нажимает кнопку другой опции.
     main_branch(message)
 
-    if check_nomer(str(message)) == True:
-        bot.send_message(message.chat.id,'Зарегистрированные VIN:')
-        bot.send_message(message.chat.id, selen_nomer_check(str(message.text).upper()))
+    if message.text == 'Поиск по Госномеру':
         return
 
     if message.text == 'Поиск по VIN':
-        pass
+        return
+
+    if check_nomer(str(message)) == True:
+        bot.send_message(message.chat.id, selen_nomer_check(str(message.text).upper()))
+        bot.send_message(message.chat.id, 'Для начала нового поиска нажмите внизу соответствующую клавишу.')
+        return
 
     else:
         bot.send_message(message.chat.id, 'Проверьте правильность символов и порядка их ввода. Допускаются только буквы АВЕКМНОРСТУХ как заглавные, так и прописные. Латинские символы недопустимы. ')
@@ -81,6 +87,3 @@ def enter_nomer(message):
 
 # need to support working of bot
 bot.polling(none_stop=True)
-
-# есть баг при нажатии той же кнопки второй раз, процессы начинают дублироваться, потом количество увеличивается в два раза с каждым нажатием.
-# как фиксить пока не знаю, помогает только перезапуск бота.
