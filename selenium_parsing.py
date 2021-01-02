@@ -29,6 +29,9 @@ def selen_vin_check(VIN):
     driver.quit()
     return answer
 
+def selen_deep_VIN_check():
+    return 'You are nice one!'
+
 def selen_nomer_check(gosnomer):
     driver = webdriver.Chrome()
     driver.get('https://vin01.ru/')
